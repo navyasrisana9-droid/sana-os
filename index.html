@@ -1,4 +1,9 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Sana OS</title><meta name="theme-color" content="#FFF1F6"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Sana OS"><meta name="apple-mobile-web-app-status-bar-style" content="default"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fredoka:wght@500..700&family=Nunito:wght@400..800&family=Yellowtail&display=swap"></head><body>
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Sana OS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fredoka:wght@500..700&family=Nunito:wght@400..800&family=Yellowtail&display=swap">
 <style>
 /* Layout: one sticky header (script wordmark, day counter, pill tab strip) over a single 760px column.
    Sections sit on a dotted blush ground, separated by dashed lines; cards are stickers with a hard pink offset shadow. */
@@ -213,6 +218,72 @@ input.sw:checked::after{left:22px;border-color:var(--accent-deep)}
 .gr::-moz-range-thumb{box-sizing:border-box;width:24px;height:24px;border-radius:50%;background:var(--surface);border:3px solid var(--accent);box-shadow:0 2px 0 var(--accent-deep)}
 .gr:disabled{opacity:.4;cursor:default}
 .gr:focus-visible{outline-offset:4px;border-radius:99px}
+/* clock tab */
+.ckwrap{position:relative;width:min(84vw,330px);margin:8px auto 0}
+.ckface{display:block;width:100%;background:none;border:0;padding:0;cursor:pointer;filter:drop-shadow(5px 6px 0 var(--shadow))}
+.ckface svg{display:block;width:100%;height:auto;overflow:visible}
+.ckface:active{transform:scale(.97)}
+.ckbezel{fill:var(--surface);stroke:var(--accent);stroke-width:7}
+.ckin{fill:color-mix(in srgb,var(--accent) 7%,var(--surface))}
+.ckt{stroke:var(--muted);stroke-width:2;stroke-linecap:round}
+.ckt.b{stroke:var(--accent);stroke-width:4}
+.ckn{fill:var(--fg);font:600 17px var(--f-display);text-anchor:middle}
+.ckeye{fill:var(--fg)}
+.ckmouth{fill:none;stroke:var(--fg);stroke-width:4;stroke-linecap:round}
+.ckcheek{fill:var(--accent);opacity:.28}
+.ckhh{stroke:var(--accent-deep);stroke-width:9;stroke-linecap:round}
+.ckmh{stroke:var(--fg);stroke-width:6;stroke-linecap:round}
+.cksh{stroke:var(--accent);stroke-width:2.5;stroke-linecap:round}
+.ckdot{fill:var(--accent)}
+.ckhub{fill:var(--surface)}
+.ckbow{fill:var(--accent);stroke:var(--accent-deep);stroke-width:2.5;stroke-linejoin:round}
+.cksp{position:absolute;font-size:22px;pointer-events:none}
+.ckdig{font:600 clamp(32px,9.5vw,50px)/1.1 var(--f-display);text-align:center;font-variant-numeric:tabular-nums;margin-top:16px}
+.ckdate{text-align:center;color:var(--muted);font:500 12px var(--f-mono);margin-top:4px}
+.ckcap{text-align:center;margin:16px auto 0;max-width:30ch;font-size:19px;min-height:2.6em}
+.ckcap::before{content:"✨ "}
+.ckw{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:12px 0;border-bottom:2px dashed var(--line)}
+.ckw .wi{font-size:28px;width:36px;text-align:center}
+.ckw .wt{font:600 24px var(--f-display);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cka{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 0;border-bottom:2px dashed var(--line)}
+.cka .at{font:600 32px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.cka.off .at{color:var(--muted)}
+.ckring{position:relative;width:min(78vw,300px);margin:8px auto 0}
+.ckring svg{display:block;width:100%;height:auto}
+.ckring .rb{fill:none;stroke:var(--sunk);stroke-width:14}
+.ckring .ra{fill:none;stroke:var(--accent);stroke-width:14;stroke-linecap:round}
+.ckring .rd{fill:var(--surface);stroke:var(--accent);stroke-width:5}
+.ckcen{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:6px}
+.ckbig{font:500 clamp(30px,9vw,44px)/1 var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.ckemo{font-size:34px;line-height:1}
+.ckbtns{display:flex;justify-content:space-between;gap:16px;max-width:320px;margin:20px auto 0}
+.ckb{width:88px;height:88px;border-radius:50%;border:2px solid var(--line);background:var(--surface);font:700 15px var(--f-body);cursor:pointer;box-shadow:3px 3px 0 var(--shadow)}
+.ckb:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+.ckb.go{background:color-mix(in srgb,var(--good) 18%,var(--surface));border-color:var(--good);color:var(--good)}
+.ckb.stop{background:color-mix(in srgb,var(--bad) 16%,var(--surface));border-color:var(--bad);color:var(--bad)}
+.ckb:disabled{opacity:.45;cursor:default;box-shadow:none}
+.cklap{display:grid;grid-template-columns:auto 1fr auto;gap:14px;padding:9px 0;border-bottom:2px dashed var(--line);font:500 15px var(--f-mono);font-variant-numeric:tabular-nums}
+.cklap.best{color:var(--good)}.cklap.worst{color:var(--bad)}
+.ckn2{width:84px;text-align:center;font:600 22px var(--f-mono)}
+.ckov{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:20px;background:color-mix(in srgb,var(--bg) 82%,transparent);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.ckcard{background:var(--surface);border:2px solid var(--accent);border-radius:28px;padding:26px 22px;text-align:center;box-shadow:6px 6px 0 var(--shadow);max-width:360px;width:100%}
+.ckbell{font-size:72px;line-height:1;display:inline-block}
+@keyframes ckshake{0%,100%{transform:rotate(0)}10%,30%,50%,70%,90%{transform:rotate(-14deg)}20%,40%,60%,80%{transform:rotate(14deg)}}
+@keyframes ckblink{0%,92%,100%{transform:scaleY(1)}96%{transform:scaleY(.08)}}
+@keyframes ckhop{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes cksway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+@keyframes ckwob{0%{transform:rotate(0)}20%{transform:rotate(-5deg) scale(1.04)}40%{transform:rotate(5deg) scale(1.04)}60%{transform:rotate(-3deg)}80%{transform:rotate(3deg)}100%{transform:rotate(0)}}
+@keyframes ckpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
+.ckeye,.ckbowg{transform-box:fill-box;transform-origin:center}
+@media (prefers-reduced-motion:no-preference){
+ .ckeye{animation:ckblink 4.5s infinite}
+ .ckbowg{animation:cksway 3.2s ease-in-out infinite}
+ .cksp{animation:twinkle 2.6s ease-in-out infinite}
+ .ckface.wob{animation:ckwob .7s}
+ .ckbell{animation:ckshake 1s infinite}
+ .ckemo.hop{animation:ckhop .6s ease-in-out infinite}
+ .ckemo.pulse{animation:ckpulse 1s ease-in-out infinite}
+}
 </style>
 
 <div class="shell">
@@ -311,7 +382,7 @@ var DEFICON={med:"🧘‍♀️",jrn:"📓",ex:"💪",h2o:"💧",acad:"📚",sle
 function hicon(h){return h.icon||DEFICON[h.id]||"✨"}
 var MOODS=["Rough","Low","Okay","Good","Great"];
 var SEMS=[{id:"fall2026",name:"Fall 2026"},{id:"spring2027",name:"Spring 2027"},{id:"summer2027",name:"Summer 2027"},{id:"fall2027",name:"Fall 2027"}];
-var DEFTABS=[["today","🌸","Today"],["lockin","🔒","Lock in"],["week","📅","Week"],["month","🗓️","Month"],["term","🎓","Semester"],["progress","📈","Progress"],["plan","📝","Plan"],["coach","💬","Coach"],["remind","⏰","Remind"]];
+var DEFTABS=[["today","🌸","Today"],["lockin","🔒","Lock in"],["week","📅","Week"],["month","🗓️","Month"],["term","🎓","Semester"],["progress","📈","Progress"],["plan","📝","Plan"],["coach","💬","Coach"],["remind","⏰","Remind"],["clock","🕰️","Clock"]];
 var TABS=[];
 function defTabs(){return DEFTABS.map(function(t){return {id:t[0],icon:t[1],label:t[2],on:true}})}
 function ensureTabs(){
@@ -407,7 +478,7 @@ function defReminders(){return [
  {id:"wk",icon:"✨",label:"Sunday weekly review",time:"19:00",on:true,weekly:true,note:"Open the Week tab and do your review."}
 ]}
 function defSettings(){return {name:"Sana",baselineGpa:"2.57",goalGpa:"",myAffs:[],reminders:defReminders(),
- habits:[{id:"med",label:"Meditation",detail:"15 minutes"},{id:"jrn",label:"Journal",detail:"10 minutes"},{id:"ex",label:"Exercise",detail:"60 minutes minimum"},{id:"h2o",label:"Drink water",detail:""},{id:"acad",label:"Academic work",detail:""},{id:"sleep",label:"Sleep properly",detail:""}]}}
+ habits:[{id:"med",label:"Meditation",detail:"15 minutes"},{id:"jrn",label:"Journal",detail:"10 minutes"},{id:"ex",label:"Exercise",detail:"60 minutes minimum"},{id:"h2o",label:"Drink water",detail:""},{id:"acad",label:"Academic work",detail:""},{id:"rel",icon:"💞",label:"Relationship reflection",detail:"10 minutes"},{id:"sleep",label:"Sleep properly",detail:""}]}}
 var blankDay=function(){return {h:{},mood:0,pri:["","",""],wins:"",imp:"",cat:{},focus:0,sessions:[],dump:""}};
 var S={settings:defSettings(),days:{},rev:{},lts:{},lists:{assignments:[],money:[],jobs:[]}};
 function home(){var t=today();return t<START?START:t}
@@ -419,17 +490,31 @@ var coach={busy:false,res:null,err:"",text:"",inc:true,crisis:false};
 var lock={mode:"lock",step:0,endAt:0,mission:"",dump:"",env:[false,false,false,false,false],dur:50,total:0,startAt:0,cp:-1,log:[],iv:null,done:0};
 
 /* ---------- storage ---------- */
-var LS="sana-os-v1",lsFail=false;
-function persistLocal(){try{localStorage.setItem(LS,JSON.stringify(S));lsFail=false}catch(e){lsFail=true}}
+var col=null,timers={},chains={},inflight=0,remoteOK=false;
+var LS="sana-os-v1";
+function persistLocal(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
 function loadLocal(){try{var r=localStorage.getItem(LS);if(r){var o=JSON.parse(r);adopt(o)}}catch(e){}}
+function migrate(){
+  var st=S.settings,m=st.mig;if(!Array.isArray(m))m=st.mig=[];
+  if(m.indexOf("rel")>=0)return false;
+  m.push("rel");
+  var hs=st.habits=Array.isArray(st.habits)?st.habits:[];
+  if(!hs.some(function(h){return h.id==="rel"})){var i=-1;hs.forEach(function(h,k){if(h.id==="sleep")i=k});var nh={id:"rel",icon:"💞",label:"Relationship reflection",detail:"10 minutes"};if(i>=0)hs.splice(i,0,nh);else hs.push(nh)}
+  return true;
+}
 function adopt(o){
   if(o.settings)S.settings=Object.assign(defSettings(),o.settings);
   if(o.days){S.days={};Object.keys(o.days).forEach(function(k){S.days[k]=Object.assign(blankDay(),o.days[k])})}
   if(o.rev)S.rev=o.rev;
   if(o.lts)S.lts=o.lts;
   if(o.lists)S.lists=Object.assign({assignments:[],money:[],jobs:[]},o.lists);
+  migrate();
 }
-function setStatus(){var el=$("#status");if(!el)return;el.textContent=lsFail?"Cannot save here. Download a backup.":"Saved on this device"}
+function setStatus(){
+  var el=$("#status");if(!el)return;
+  var busy=inflight>0||Object.keys(timers).length>0;
+  el.textContent=busy?"Saving…":(remoteOK?"Saved":"On this device only");
+}
 function bodyFor(key){
   var i=key.indexOf("-"),kind=i<0?key:key.slice(0,i),k=key.slice(i+1);
   if(key==="settings")return S.settings;
@@ -438,7 +523,63 @@ function bodyFor(key){
   if(kind==="list")return {items:S.lists[k]||[]};
 }
 function stamp(key){var n=Date.now();if(key.indexOf("list-")===0){S.lts[key.slice(5)]=n}else{var b=bodyFor(key);if(b)b._t=n}}
-function save(key){stamp(key);persistLocal();setStatus()}
+function save(key){
+  stamp(key);persistLocal();
+  clearTimeout(timers[key]);
+  timers[key]=setTimeout(function(){delete timers[key];flush(key,0)},600);
+  setStatus();
+}
+function flush(key,tries){
+  if(!col){setStatus();return}
+  var b=bodyFor(key);if(!b)return;
+  var snap=clone(b);if(key.indexOf("list-")===0)snap._t=S.lts[key.slice(5)]||0;
+  inflight++;setStatus();
+  chains[key]=(chains[key]||Promise.resolve()).then(function(){return col.doc(key).set(snap)}).then(function(){inflight--;setStatus()},function(err){
+    inflight--;setStatus();
+    if(err&&err.code==="unavailable"&&tries<1){setTimeout(function(){flush(key,tries+1)},1500+Math.random()*1000)}
+    else{var el=$("#status");if(el)el.textContent="Sync problem. Kept on this device."}
+  });
+}
+function applyRemote(snap){
+  var pending=Object.keys(timers);
+  snap.docs.forEach(function(d){
+    var id=d.id;if(pending.indexOf(id)>=0)return;
+    var data=clone(d.data()||{}),rt=data._t||0;
+    var i=id.indexOf("-"),kind=i<0?id:id.slice(0,i),k=id.slice(i+1);
+    if(id==="settings"){if(rt>=((S.settings&&S.settings._t)||0))S.settings=Object.assign(defSettings(),data)}
+    else if(kind==="day"){if(rt>=((S.days[k]&&S.days[k]._t)||0))S.days[k]=Object.assign(blankDay(),data)}
+    else if(kind==="rev"){if(rt>=((S.rev[k]&&S.rev[k]._t)||0))S.rev[k]=data}
+    else if(kind==="list"){if(rt>=(S.lts[k]||0)){S.lists[k]=data.items||[];S.lts[k]=rt}}
+  });
+}
+function hasLocalData(){return Object.keys(S.days).length>0||Object.keys(S.rev).length>0||S.lists.assignments.length+S.lists.money.length+S.lists.jobs.length>0}
+function loadRemote(){
+  if(!col)return Promise.resolve();
+  return col.get().then(function(snap){
+    remoteOK=true;
+    if(snap.empty){
+      if(hasLocalData()){
+        Object.keys(S.days).forEach(function(k){flush("day-"+k,0)});
+        Object.keys(S.rev).forEach(function(k){flush("rev-"+k,0)});
+        Object.keys(S.lists).forEach(function(k){flush("list-"+k,0)});
+        flush("settings",0);
+      }
+    }else{applyRemote(snap);if(migrate())save("settings");persistLocal()}
+    setStatus();
+    if(!isEditing())render();
+  }).catch(function(){remoteOK=false;setStatus()});
+}
+function isEditing(){var a=document.activeElement;return a&&(a.tagName==="INPUT"||a.tagName==="TEXTAREA"||a.tagName==="SELECT")}
+function initRemote(){
+  var cl=window.claude;if(!cl||!cl.use){return}
+  Promise.all([cl.use("db"),cl.use("user")]).then(function(r){
+    var db=r[0],user=r[1];if(!db||!user)return null;
+    return user.id().then(function(id){if(!id)return null;col=db.collection("data/users/"+id);return loadRemote()});
+  }).catch(function(){});
+}
+document.addEventListener("visibilitychange",function(){
+  if(document.visibilityState==="visible"&&col&&Object.keys(timers).length===0&&inflight===0)loadRemote();
+});
 
 var RM=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
 var pick=function(a){return a[Math.floor(Math.random()*a.length)]};
@@ -518,6 +659,73 @@ function weekRange(end){return {from:addDays(end,-6),to:end}}
 function vHead(title,sub,extra){return '<div class="head"><div><h2>'+title+'</h2>'+(sub?'<div class="sub">'+sub+'</div>':'')+'</div>'+(extra||'')+'</div>'}
 
 function greet(){var h=new Date().getHours();return h<5?"Still up":h<12?"Good morning":h<17?"Good afternoon":"Good evening"}
+/* ---------- Late start ---------- */
+var lateOpen=false,lateV={start:"",bed:""};
+var DEFMIN={med:[15,5],jrn:[10,5],ex:[60,20],h2o:[0,0],acad:[90,30],rel:[10,5]};
+var LPRIO=["acad","ex","med","jrn","rel"];
+var LATEMSG=["Starting late still counts. The streak cares that you showed up, not what time it was.","The day is not ruined. It is just shorter. Shorter is workable.","You are not behind. You are starting. Same thing, better outfit.","Lite versions count. Done small beats skipped big.","Nobody is grading the clock. Do the next block."];
+function hMins(h){var d=DEFMIN[h.id]||[20,10],f=numOf(h.full,d[0],0,240),l=numOf(h.lite,d[1],0,240);if(l>f)l=f;return {f:f,l:l}}
+function hPrio(h){var i=LPRIO.indexOf(h.id);return i<0?5:i}
+function toMin(x){var p=String(x||"").split(":");return (+p[0]||0)*60+(+p[1]||0)}
+function hmStr(m){m=((m%1440)+1440)%1440;return pad(Math.floor(m/60))+":"+pad(m%60)}
+function nowRound5(){var n=new Date(),m=Math.ceil((n.getHours()*60+n.getMinutes())/5)*5;return hmStr(m)}
+function defBed(){if(S.settings.lateBed)return S.settings.lateBed;var r=(S.settings.reminders||[]).filter(function(x){return x.id==="bed"})[0];return (r&&r.time)||"22:30"}
+function buildLate(start,bed,d){
+  var sm=toMin(start),bm=toMin(bed);if(bm<=sm)bm+=1440;
+  var avail=bm-sm-30,GAP=5;
+  var pend=S.settings.habits.filter(function(h){return h.id!=="sleep"&&!d.h[h.id]});
+  var quick=pend.filter(function(h){return hMins(h).f===0});
+  var items=pend.filter(function(h){return hMins(h).f>0}).sort(function(a,b){return hPrio(a)-hPrio(b)}).map(function(h){return {h:h,lite:false,m:0}});
+  var mins=function(x){return x.m||(x.lite?hMins(x.h).l:hMins(x.h).f)};
+  var total=function(){return items.reduce(function(a,x){return a+mins(x)},0)+GAP*Math.max(0,items.length-1)};
+  var dropped=[],all=items.slice();
+  while(items.length&&total()>avail){
+    var j=-1;for(var i=items.length-1;i>=0;i--){var mm=hMins(items[i].h);if(!items[i].lite&&mm.l<mm.f){j=i;break}}
+    if(j>=0)items[j].lite=true;else dropped.unshift(items.pop().h)
+  }
+  var minimum=false;
+  if(!items.length&&all.length){var top=all[0];items=[{h:top.h,lite:true,m:Math.min(5,hMins(top.h).l||5)}];dropped=all.slice(1).map(function(x){return x.h});minimum=true}
+  var t=sm,out=[];
+  quick.forEach(function(h){out.push({id:h.id,s:t,e:t,m:0,lite:false})});
+  items.forEach(function(x){var m=mins(x);out.push({id:x.h.id,s:t,e:t+m,m:m,lite:x.lite});t+=m+GAP});
+  return {start:start,bed:bed,avail:avail,items:out,dropped:dropped.map(function(h){return h.id}),minimum:minimum};
+}
+function lateBuild(){
+  var start=lateV.start||nowRound5(),bed=lateV.bed||defBed(),key="day-"+today(),d=root(key,true);
+  d.late=buildLate(start,bed,d);S.settings.lateBed=bed;save("settings");save(key);lateOpen=false;lateV={start:"",bed:""};
+  toast("Plan built. Start the first block 💪");
+}
+function lateSection(date,d,t){
+  if(date!==t)return '';
+  var hs=S.settings.habits,done=hs.filter(function(h){return d.h[h.id]}).length,n=new Date();
+  var y=addDays(t,-1),back=y>=START&&!isLogged(S.days[y])&&!isLogged(d);
+  var behind=n.getHours()>=12&&done<hs.length/2&&!d.late;
+  var came=Object.keys(S.days).filter(function(k){return S.days[k].late&&dayPct(k)>=.5}).length;
+  var o='<section class="sec"><h3>🐢 Running late?</h3>';
+  if(back&&!d.late)o+='<div class="note" style="margin:0 0 12px"><strong>Welcome back 💗</strong><p style="margin:4px 0 0">Yesterday did not get logged. That is okay. Streaks restart, your total days do not. Ease in with a late-start plan.</p></div>';
+  else if(behind)o+='<p>It is '+esc(tzTime(LOCALTZ,n))+' and you have done '+done+' of '+hs.length+'. '+esc(LATEMSG[(diff(START,t)+5)%LATEMSG.length])+'</p>';
+  else if(!d.late)o+='<p class="muted">Woke up late or lost the morning? Tell me when you are starting and when you want to be in bed, and I will shrink the routine to fit.</p>';
+  if(d.late){
+    var L=d.late,byId={};hs.forEach(function(h){byId[h.id]=h});
+    o+='<p class="coachline">Plan from '+esc(fmtTime(hmStr(toMin(L.start))))+' to bed at '+esc(fmtTime(L.bed))+'</p><p class="muted" style="margin-bottom:8px">'+esc(LATEMSG[(diff(START,t)+2)%LATEMSG.length])+'</p>';
+    o+=L.items.map(function(it){var h=byId[it.id];if(!h)return '';var on=!!d.h[it.id];
+      return '<div class="li'+(on?' done':'')+'"><button type="button" class="tick" data-act="habit" data-id="'+esc(it.id)+'" aria-pressed="'+on+'" aria-label="Mark '+esc(h.label)+' done"></button>'
+       +'<div class="t"><strong>'+esc(hicon(h))+' '+esc(h.label)+'</strong><small style="display:block">'+(it.m?esc(fmtTime(hmStr(it.s)))+' to '+esc(fmtTime(hmStr(it.e)))+' · '+it.m+' min':'Do it right now')+'</small></div>'
+       +'<div class="row">'+(it.m?'<span class="pill">'+(it.lite?'lite':'full')+'</span>':'')+(it.m&&!on?'<button class="btn sm" type="button" data-act="late-timer" data-m="'+it.m+'">⏳ Timer</button>':'')+'</div></div>'}).join("");
+    if(L.minimum)o+='<p class="muted" style="margin-top:8px">Not much time left, so this is the one thing worth doing. Tomorrow is a clean slate.</p>';
+    if(L.dropped&&L.dropped.length)o+='<p class="muted" style="margin-top:8px">Saving for tomorrow: '+L.dropped.map(function(id){return byId[id]?esc(hicon(byId[id])+' '+byId[id].label):''}).join(", ")+'</p>';
+    o+='<p class="muted" style="margin-top:8px">🌙 Wind down by '+esc(fmtTime(hmStr(toMin(L.bed)-30)))+', in bed by '+esc(fmtTime(L.bed))+'.</p>';
+    o+='<div class="row" style="margin-top:12px"><button class="btn sm" type="button" data-act="late-replan">Re-plan from now</button><button class="btn sm ghost" type="button" data-act="late-clear">Clear plan</button></div>';
+  }else if(lateOpen){
+    o+='<div class="grid2"><div class="fw"><label class="f" for="late-start">I am starting at</label><input id="late-start" type="time" data-late="start" value="'+esc(lateV.start||nowRound5())+'"></div><div class="fw"><label class="f" for="late-bed">In bed by</label><input id="late-bed" type="time" data-late="bed" value="'+esc(lateV.bed||defBed())+'"></div></div>'
+     +'<div class="row" style="margin-top:14px"><button class="btn primary" type="button" data-act="late-build">Build my plan ✨</button><button class="btn ghost" type="button" data-act="late-open">Cancel</button></div><p class="muted" style="margin-top:8px">Leaves 30 minutes to wind down before bed. Only habits you have not done yet go in the plan.</p>';
+  }else{
+    o+='<button class="btn primary" type="button" data-act="late-open">Rescue my day 🛟</button>';
+  }
+  if(came>0)o+='<p class="muted" style="margin-top:12px">💪 Comeback days: <strong>'+came+'</strong> (late starts where you still finished half or more)</p>';
+  return o+'</section>';
+}
+
 function vToday(){
   var date=cur,key="day-"+date,d=dayOf(date),hs=S.settings.habits,t=today(),fx=justId,afx=affFx;justId=null;affFx=false;var mfx=justMood;justMood=false;
   var idx=diff(START,date)+1;
@@ -539,6 +747,7 @@ function vToday(){
   +'<section class="sec"><h3>Non-negotiables · '+done+' of '+hs.length+'</h3><div class="meter" role="img" aria-label="'+pc(p)+' of habits done"><i style="width:'+pc(p)+'"></i></div><div style="height:12px"></div>'
   +'<div class="habits">'+hs.map(function(h){var on=!!d.h[h.id],st=streak(h.id),tot=totalDays(h.id);
     return '<button type="button" class="habit'+(on?' on':'')+(fx===h.id?' just':'')+'" data-act="habit" data-id="'+esc(h.id)+'" aria-pressed="'+on+'"><span class="box" aria-hidden="true"></span><span class="hl"><strong><span class="ic">'+esc(hicon(h))+'</span> '+esc(h.label)+'</strong>'+(h.detail?'<small>'+esc(h.detail)+'</small>':'')+'</span><span class="st"'+(tot?' title="'+tot+(tot===1?' day':' days')+' logged in total'+(st>=2?', '+st+' in a row':'')+'"':'')+'>'+(tot?(st>=3?'<span class="flame">🔥</span> ':'')+tot+(tot===1?' day':' days'):'')+'</span></button>'}).join("")+'</div></section>'
+  +lateSection(date,d,t)
   +'<section class="sec"><h3>Mood</h3><div class="mood">'+MOODS.map(function(m,i){return '<button type="button" class="'+(mfx&&d.mood===i+1?'wig':'')+'" data-act="mood" data-v="'+(i+1)+'" aria-pressed="'+(d.mood===i+1)+'"><span class="e">'+MEMO[i]+'</span><br>'+m+'</button>'}).join("")+'</div>'+lowNote+'</section>'
   +'<section class="sec"><h3>Top three priorities</h3><div class="grid3">'+[0,1,2].map(function(i){return fld(key,"pri."+i,"Priority "+(i+1))}).join("")+'</div></section>'
   +'<section class="sec"><h3>Daily review</h3><div class="grid2">'+CATS.map(function(c){return lab(key,"cat."+c[0],c[1],"One or two lines",2)}).join("")+'</div></section>'
@@ -794,6 +1003,236 @@ function vRemind(){
   +'<section class="sec"><h3>Copy as a list</h3><textarea id="rem-text" rows="8" readonly>'+esc(remText())+'</textarea><div style="height:10px"></div><button class="btn primary" type="button" data-act="copyrem">Copy the list ✨</button></section>';
 }
 
+/* ---------- Clock tab ---------- */
+var CITIES=[["ny","New York","America/New_York"],["la","Los Angeles","America/Los_Angeles"],["chi","Chicago","America/Chicago"],["tor","Toronto","America/Toronto"],["mex","Mexico City","America/Mexico_City"],["sao","São Paulo","America/Sao_Paulo"],["lon","London","Europe/London"],["par","Paris","Europe/Paris"],["cai","Cairo","Africa/Cairo"],["lag","Lagos","Africa/Lagos"],["dub","Dubai","Asia/Dubai"],["kar","Karachi","Asia/Karachi"],["mum","Mumbai","Asia/Kolkata"],["sin","Singapore","Asia/Singapore"],["tok","Tokyo","Asia/Tokyo"],["seo","Seoul","Asia/Seoul"],["syd","Sydney","Australia/Sydney"],["auc","Auckland","Pacific/Auckland"]];
+var LOCALTZ=(function(){try{return Intl.DateTimeFormat().resolvedOptions().timeZone||""}catch(e){return ""}})();
+var ck={sub:"clock",taps:0,cap:"",spinAt:0,raf:0,ls:-1,audio:null,fired:{},snooze:null,ringT:null,ringIv:null,ringLabel:"",
+  sw:{run:false,t0:0,acc:0,laps:[],lastLap:0},tm:{set:300,run:false,paused:false,endAt:0,left:0,total:0}};
+function alarms(){return Array.isArray(S.settings.alarms)?S.settings.alarms:(S.settings.alarms=[])}
+function cities(){return Array.isArray(S.settings.cities)?S.settings.cities:(S.settings.cities=["ny","la","lon","tok"])}
+function tzO(tz,o){if(tz)o.timeZone=tz;return o}
+function tzTime(tz,d){return d.toLocaleTimeString("en-US",tzO(tz,{hour:"numeric",minute:"2-digit"}))}
+function tzHour(tz,d){return parseInt(d.toLocaleTimeString("en-US",tzO(tz,{hour:"numeric",hour12:false})),10)%24}
+function tzDay(tz,d){return d.toLocaleDateString("en-CA",tzO(tz,{year:"numeric",month:"2-digit",day:"2-digit"}))}
+function tzOff(tz,d){var a=new Date(d.toLocaleString("en-US",tzO(tz,{}))),b=new Date(d.toLocaleString("en-US",tzO(LOCALTZ,{})));return Math.round((a-b)/60000)}
+function sunIcon(h){return h>=5&&h<7?"🌅":h>=7&&h<17?"☀️":h>=17&&h<20?"🌇":"🌙"}
+function cityRows(){
+  return [{id:"local",name:"Your time",tz:LOCALTZ}].concat(cities().map(function(id){var c=CITIES.filter(function(x){return x[0]===id})[0];return c?{id:id,name:c[1],tz:c[2]}:null}).filter(Boolean));
+}
+function wInfo(r,n){
+  var rel;
+  if(r.id==="local"){rel=LOCALTZ?"📍 "+LOCALTZ.split("/").pop().replace(/_/g," "):"📍 Where you are"}
+  else{
+    var dd=diff(tzDay(LOCALTZ,n),tzDay(r.tz,n)),m=tzOff(r.tz,n),a=Math.abs(m);
+    rel=(dd===0?"Today":dd===1?"Tomorrow":dd===-1?"Yesterday":"")+", "+(m===0?"same time as you":Math.floor(a/60)+"h"+(a%60?" "+(a%60)+"m":"")+(m>0?" ahead":" behind"));
+  }
+  return {t:tzTime(r.tz,n),i:sunIcon(tzHour(r.tz,n)),r:rel};
+}
+function swMs(){return ck.sw.acc+(ck.sw.run?Date.now()-ck.sw.t0:0)}
+function fmtSw(ms){var m=Math.floor(ms/60000),s=Math.floor(ms/1000)%60,c=Math.floor(ms/10)%100;return pad(m)+":"+pad(s)+"."+pad(c)}
+function tmLeft(){var t=ck.tm;return t.run?Math.max(0,t.endAt-Date.now()):t.paused?t.left:t.set*1000}
+function fmtTm(ms){var sec=Math.ceil(ms/1000),h=Math.floor(sec/3600),m=Math.floor(sec/60)%60,s=sec%60;return h?h+":"+pad(m)+":"+pad(s):pad(m)+":"+pad(s)}
+var RC=2*Math.PI*104;
+
+function ckFaceSvg(){
+  var t="",i,a,r,n,x,y;
+  for(i=0;i<60;i++){a=i*Math.PI/30;r=i%5===0?100:106;t+='<line class="ckt'+(i%5===0?' b':'')+'" x1="'+(130+Math.sin(a)*r).toFixed(1)+'" y1="'+(130-Math.cos(a)*r).toFixed(1)+'" x2="'+(130+Math.sin(a)*112).toFixed(1)+'" y2="'+(130-Math.cos(a)*112).toFixed(1)+'"/>'}
+  for(n=1;n<=12;n++){a=n*Math.PI/6;x=130+Math.sin(a)*84;y=130-Math.cos(a)*84+6;t+='<text class="ckn" x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'">'+n+'</text>'}
+  return '<svg viewBox="0 -24 260 284" role="img" aria-label="Analog clock">'
+   +'<circle class="ckbezel" cx="130" cy="130" r="122"/><circle class="ckin" cx="130" cy="130" r="114"/>'+t
+   +'<ellipse class="ckeye" cx="104" cy="90" rx="6.5" ry="8"/><ellipse class="ckeye" cx="156" cy="90" rx="6.5" ry="8"/>'
+   +'<ellipse class="ckcheek" cx="88" cy="112" rx="10" ry="7"/><ellipse class="ckcheek" cx="172" cy="112" rx="10" ry="7"/>'
+   +'<path class="ckmouth" d="M114 152 Q130 168 146 152"/>'
+   +'<g class="ckbowg"><path class="ckbow" d="M130 8 C112 -22 92 -8 100 10 C106 22 124 14 130 8Z"/><path class="ckbow" d="M130 8 C148 -22 168 -8 160 10 C154 22 136 14 130 8Z"/><circle class="ckbow" cx="130" cy="9" r="6"/></g>'
+   +'<g id="ck-h"><line class="ckhh" x1="130" y1="130" x2="130" y2="78"/></g>'
+   +'<g id="ck-m"><line class="ckmh" x1="130" y1="130" x2="130" y2="56"/></g>'
+   +'<g id="ck-s"><line class="cksh" x1="130" y1="144" x2="130" y2="36"/><circle class="ckdot" cx="130" cy="34" r="6"/></g>'
+   +'<circle class="ckdot" cx="130" cy="130" r="9"/><circle class="ckhub" cx="130" cy="130" r="3.5"/></svg>';
+}
+function ckViewClock(){
+  if(!ck.cap)ck.cap=pick(AFF);
+  return '<section class="sec"><div class="ckwrap"><button type="button" class="ckface" id="ck-face" data-act="ck-tap" aria-label="Tap the clock for a surprise">'+ckFaceSvg()+'</button>'
+   +'<span class="cksp" style="left:-4%;top:4%" aria-hidden="true">✨</span><span class="cksp" style="right:-4%;top:14%;animation-delay:-.9s" aria-hidden="true">💖</span><span class="cksp" style="left:2%;bottom:6%;animation-delay:-1.7s" aria-hidden="true">⭐</span><span class="cksp" style="right:0;bottom:10%;animation-delay:-2.2s" aria-hidden="true">🌸</span></div>'
+   +'<div class="ckdig" id="ck-dig" aria-live="off"></div><div class="ckdate" id="ck-date"></div>'
+   +'<p class="aff ckcap" id="ck-cap">'+esc(ck.cap)+'</p><p class="muted" style="text-align:center;margin:0">Tap the clock. It has feelings. 💅</p></section>';
+}
+function ckViewWorld(){
+  var n=new Date(),rows=cityRows(),have=cities();
+  var opts=CITIES.filter(function(c){return have.indexOf(c[0])<0}).map(function(c){return '<option value="'+c[0]+'">'+esc(c[1])+'</option>'}).join("");
+  return '<section class="sec"><h3>World clock</h3>'+rows.map(function(r){var w=wInfo(r,n);
+    return '<div class="ckw" data-tz="'+esc(r.id)+'"><span class="wi" aria-hidden="true">'+w.i+'</span><div style="min-width:0"><strong>'+esc(r.name)+'</strong><small class="wr" style="display:block">'+esc(w.r)+'</small></div><span class="wt">'+esc(w.t)+'</span>'
+    +(r.id==="local"?'<span></span>':'<button class="x" type="button" data-act="ck-cdel" data-id="'+esc(r.id)+'" aria-label="Remove '+esc(r.name)+'">Remove</button>')+'</div>'}).join("")
+   +(opts?'<div class="row" style="margin-top:16px;flex-wrap:nowrap"><select id="ck-city" aria-label="Pick a city to add">'+opts+'</select><button class="btn primary" type="button" data-act="ck-cadd">Add</button></div>':'')+'</section>';
+}
+function nextRing(a){
+  var n=new Date(),p=a.time.split(":"),k,d;
+  for(k=0;k<8;k++){d=new Date(n.getFullYear(),n.getMonth(),n.getDate()+k,+p[0],+p[1],0);if(d>n&&(a.rep!=="weekdays"||(d.getDay()>0&&d.getDay()<6)))break}
+  var m=Math.max(1,Math.round((d-n)/60000)),dd=Math.floor(m/1440),hh=Math.floor(m%1440/60),mm=m%60;
+  return "rings in "+(dd?dd+"d ":"")+(hh?hh+"h ":"")+((mm||(!dd&&!hh))?mm+"m":"");
+}
+function ckViewAlarm(){
+  var A=alarms().slice().sort(function(a,b){return a.time<b.time?-1:a.time>b.time?1:0});
+  return '<section class="sec"><h3>Alarms</h3>'
+   +'<div class="note" style="margin:0 0 14px"><strong>Heads up 💌</strong><p style="margin:4px 0 0">Alarms ring while Sana OS is open on your screen. For anything that has to wake you up, also set one in your phone\'s own Clock app.</p></div>'
+   +(A.length?A.map(function(a){return '<div class="cka'+(a.on?'':' off')+'"><input type="checkbox" class="sw" data-ck="atog" data-id="'+a.id+'" aria-label="Alarm at '+esc(fmtTime(a.time))+'"'+(a.on?' checked':'')+'><div style="min-width:0"><div class="at">'+esc(fmtTime(a.time))+'</div><small>'+esc(a.label||"Alarm")+' · '+(a.rep==="daily"?"every day":a.rep==="weekdays"?"weekdays":"once")+(a.on?' · '+esc(nextRing(a)):' · off')+'</small></div><button class="x" type="button" data-act="ck-adel" data-id="'+a.id+'">Remove</button></div>'}).join(""):'<p class="muted">No alarms yet. Add your first one below.</p>')
+   +'</section><section class="sec"><h3>New alarm</h3><form data-form="ckalarm" class="grid3" style="align-items:end"><div class="fw"><label class="f" for="ck-at">Time</label><input id="ck-at" type="time" required value="07:30"></div><div class="fw"><label class="f" for="ck-al">Label</label><input id="ck-al" type="text" placeholder="e.g. Wake up, girl"></div><div class="fw"><label class="f" for="ck-ar">Repeat</label><select id="ck-ar"><option value="once">Once</option><option value="daily" selected>Every day</option><option value="weekdays">Weekdays</option></select></div><div><button class="btn primary" type="submit">Set alarm ⏰</button></div></form></section>';
+}
+function ringSvg(arcId,dotId,off){
+  return '<svg viewBox="0 0 260 260" aria-hidden="true"><circle class="rb" cx="130" cy="130" r="104"/><circle class="ra" id="'+arcId+'" cx="130" cy="130" r="104" transform="rotate(-90 130 130)" stroke-dasharray="'+RC.toFixed(2)+'" stroke-dashoffset="'+off.toFixed(2)+'"/><g id="'+dotId+'"><circle class="rd" cx="130" cy="26" r="9"/></g></svg>';
+}
+function ckViewSw(){
+  var w=ck.sw,ms=swMs(),laps=w.laps,sp=laps.map(function(l){return l.split}),mn=Math.min.apply(null,sp),mx=Math.max.apply(null,sp);
+  return '<section class="sec"><h3>Stopwatch</h3><div class="ckring">'+ringSvg("ck-swarc","ck-swdot",RC)+'<div class="ckcen"><div class="ckbig" id="ck-swt">'+fmtSw(ms)+'</div><div class="ckemo'+(w.run?' hop':'')+'" id="ck-swe" aria-hidden="true">'+(w.run?'🏃‍♀️':'🧍‍♀️')+'</div></div></div>'
+   +'<div class="ckbtns"><button type="button" class="ckb" data-act="ck-swlap"'+(!w.run&&ms===0?' disabled':'')+'>'+(w.run?'Lap':'Reset')+'</button><button type="button" class="ckb '+(w.run?'stop':'go')+'" data-act="ck-swgo">'+(w.run?'Stop':'Start')+'</button></div>'
+   +(laps.length?'<div style="margin-top:20px">'+laps.slice().reverse().map(function(l){var c=laps.length>1&&mn!==mx?(l.split===mn?' best':l.split===mx?' worst':''):'';return '<div class="cklap'+c+'"><span>Lap '+l.n+'</span><span>'+fmtSw(l.split)+'</span><span class="muted">'+fmtSw(l.total)+'</span></div>'}).join("")+'</div>':'')+'</section>';
+}
+function ckViewTm(){
+  var t=ck.tm,active=t.run||t.paused,left=tmLeft(),tot=active?t.total:t.set,frac=tot>0?left/(tot*1000):1;
+  var pre=[[60,"1 min"],[300,"5 min"],[600,"10 min"],[900,"15 min"],[1500,"25 min"],[2700,"45 min"]];
+  return '<section class="sec"><h3>Timer</h3><div class="ckring">'+ringSvg("ck-tmarc","ck-tmdot",RC*(1-frac))+'<div class="ckcen"><div class="ckbig" id="ck-tmt">'+fmtTm(left)+'</div><div class="ckemo'+(t.run?' pulse':'')+'" id="ck-tme" aria-hidden="true">'+(t.run?'🍓':t.paused?'😴':'🍓')+'</div></div></div>'
+   +'<div class="ckbtns"><button type="button" class="ckb" data-act="ck-tmreset"'+(active?'':' disabled')+'>Cancel</button><button type="button" class="ckb '+(t.run?'stop':'go')+'" data-act="ck-tmgo">'+(t.run?'Pause':t.paused?'Resume':'Start')+'</button></div>'
+   +(active?'':'<div style="margin-top:22px"><div class="row" style="justify-content:center">'+pre.map(function(x){return '<button type="button" class="chip" data-act="ck-tmset" data-v="'+x[0]+'" aria-pressed="'+(t.set===x[0])+'">'+x[1]+'</button>'}).join("")+'</div>'
+   +'<div class="row" style="justify-content:center;margin-top:14px"><label class="f" for="ck-tmin" style="margin:0">Min</label><input class="ckn2" id="ck-tmin" type="number" min="0" max="99" inputmode="numeric" data-ck="tin" value="'+Math.floor(t.set/60)+'"><label class="f" for="ck-tsec" style="margin:0">Sec</label><input class="ckn2" id="ck-tsec" type="number" min="0" max="59" inputmode="numeric" data-ck="tin" value="'+(t.set%60)+'"></div></div>')+'</section>';
+}
+function vClock(){
+  var subs=[["clock","🕰️","Clock"],["world","🌍","World"],["alarm","⏰","Alarm"],["sw","⏱️","Stopwatch"],["tm","⏳","Timer"]];
+  var body={clock:ckViewClock,world:ckViewWorld,alarm:ckViewAlarm,sw:ckViewSw,tm:ckViewTm}[ck.sub]();
+  return vHead("Clock 🕰️","Time, but make it cute")
+   +'<section class="sec"><div class="row" role="group" aria-label="Clock tools">'+subs.map(function(x){return '<button type="button" class="chip" data-act="ck-sub" data-v="'+x[0]+'" aria-pressed="'+(ck.sub===x[0])+'">'+x[1]+' '+x[2]+'</button>'}).join("")+'</div></section>'+body;
+}
+
+/* paint */
+function ckRot(id,deg){var e=document.getElementById(id);if(e)e.setAttribute("transform","rotate("+deg.toFixed(2)+" 130 130)")}
+function ckSpinOff(){if(!ck.spinAt)return 0;var p=Math.min(1,(Date.now()-ck.spinAt)/1500);if(p>=1){ck.spinAt=0;return 0}return 720*(1-Math.pow(1-p,3))}
+function setT(id,t){var e=document.getElementById(id);if(e&&e.textContent!==t)e.textContent=t}
+function ckPaint(force){
+  var n=new Date(),sub=ck.sub;
+  if(sub==="clock"){
+    var off=ckSpinOff(),sec=n.getSeconds()+n.getMilliseconds()/1000,mi=n.getMinutes()+sec/60,hr=(n.getHours()%12)+mi/60;
+    ckRot("ck-s",sec*6+off*2);ckRot("ck-m",mi*6+off);ckRot("ck-h",hr*30+off*1.5);
+    setT("ck-dig",n.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit",second:"2-digit"}));
+    var idx=diff(START,today())+1;
+    setT("ck-date",fmtLong(today())+(idx>=1&&idx<=TOTAL?" · Day "+idx+" of "+TOTAL:""));
+  }else if(sub==="world"){
+    if(force||ck.ls!==n.getSeconds()){
+      ck.ls=n.getSeconds();
+      var rows=document.querySelectorAll(".ckw"),map={};cityRows().forEach(function(r){map[r.id]=r});
+      for(var i=0;i<rows.length;i++){var el=rows[i],r=map[el.dataset.tz];if(!r)continue;var w=wInfo(r,n);
+        var a=el.querySelector(".wt"),b=el.querySelector(".wi"),c=el.querySelector(".wr");
+        if(a&&a.textContent!==w.t)a.textContent=w.t;if(b&&b.textContent!==w.i)b.textContent=w.i;if(c&&c.textContent!==w.r)c.textContent=w.r}
+    }
+  }else if(sub==="sw"){
+    var ms=swMs();setT("ck-swt",fmtSw(ms));
+    var arc=document.getElementById("ck-swarc");if(arc)arc.setAttribute("stroke-dashoffset",(RC*(1-(ms%60000)/60000)).toFixed(2));
+    ckRot("ck-swdot",(ms%60000)/60000*360);
+  }else if(sub==="tm"){
+    var t=ck.tm,left=tmLeft(),tot=(t.run||t.paused)?t.total:t.set;
+    setT("ck-tmt",fmtTm(left));
+    var a2=document.getElementById("ck-tmarc");if(a2)a2.setAttribute("stroke-dashoffset",(RC*(1-(tot>0?left/(tot*1000):1))).toFixed(2));
+    ckRot("ck-tmdot",(tot>0?left/(tot*1000):1)*360);
+  }
+}
+function ckFrame(){
+  ck.raf=0;
+  if(tab!=="clock"||settingsOpen)return;
+  ckPaint(false);
+  if(typeof requestAnimationFrame==="function")ck.raf=requestAnimationFrame(ckFrame);
+}
+function ckSync(){
+  if(tab!=="clock"||settingsOpen)return;
+  ckPaint(true);
+  if(!ck.raf&&typeof requestAnimationFrame==="function")ck.raf=requestAnimationFrame(ckFrame);
+}
+
+/* sound + ringing */
+function ckAudioInit(){
+  try{if(!ck.audio){var AC=window.AudioContext||window.webkitAudioContext;if(AC)ck.audio=new AC()}if(ck.audio&&ck.audio.state==="suspended")ck.audio.resume()}catch(e){}
+}
+function ckBeep(){
+  try{var c=ck.audio;if(!c)return;[880,1175,880].forEach(function(f,i){var o=c.createOscillator(),g=c.createGain(),st=c.currentTime+i*.2;o.type="sine";o.frequency.value=f;g.gain.setValueAtTime(.0001,st);g.gain.exponentialRampToValueAtTime(.25,st+.02);g.gain.exponentialRampToValueAtTime(.0001,st+.17);o.connect(g);g.connect(c.destination);o.start(st);o.stop(st+.2)})}catch(e){}
+  try{if(navigator.vibrate)navigator.vibrate([200,100,200])}catch(e){}
+}
+function ckStopRing(){
+  clearInterval(ck.ringIv);clearTimeout(ck.ringT);ck.ringIv=null;ck.ringT=null;
+  var o=document.getElementById("ck-ring");if(o&&o.parentNode)o.parentNode.removeChild(o);
+}
+function ckRing(kind,title,sub){
+  ckStopRing();ck.ringLabel=sub||"";
+  var d=document.createElement("div");d.id="ck-ring";d.className="ckov";d.setAttribute("role","alertdialog");d.setAttribute("aria-label",title);
+  d.innerHTML='<div class="ckcard"><div class="ckbell" aria-hidden="true">'+(kind==="al"?"⏰":"🎉")+'</div><h2 style="margin:10px 0 6px">'+esc(title)+'</h2><p class="muted">'+esc(sub||"")+'</p><div class="row" style="justify-content:center;margin-top:14px">'+(kind==="al"?'<button class="btn" type="button" data-act="ck-snooze">Snooze 5 min</button>':'')+'<button class="btn primary" type="button" data-act="ck-dismiss" id="ck-dis">'+(kind==="al"?"I'm up":"Done")+' ✨</button></div></div>';
+  document.body.appendChild(d);
+  try{document.getElementById("ck-dis").focus()}catch(e){}
+  confetti(innerWidth/2,innerHeight/3,60);ckBeep();
+  ck.ringIv=setInterval(ckBeep,1400);ck.ringT=setTimeout(ckStopRing,90000);
+}
+function ckTick(){
+  var n=new Date(),hm=pad(n.getHours())+":"+pad(n.getMinutes()),dk=today(),dow=n.getDay(),redo=false;
+  alarms().forEach(function(a){
+    if(!a.on||a.time!==hm)return;
+    var key=dk+hm;if(ck.fired[a.id]===key)return;
+    if(a.rep==="weekdays"&&(dow===0||dow===6))return;
+    ck.fired[a.id]=key;
+    ckRing("al",a.label||"Alarm",fmtTime(a.time));
+    if(a.rep==="once"||!a.rep){a.on=false;save("settings");redo=true}
+  });
+  if(ck.snooze&&Date.now()>=ck.snooze.at){var sn=ck.snooze;ck.snooze=null;ckRing("al",sn.label||"Alarm","Snoozed alarm")}
+  var t=ck.tm;
+  if(t.run&&Date.now()>=t.endAt){t.run=false;t.paused=false;ckRing("tm","Time's up!",fmtTm(t.total*1000)+" timer finished");redo=true}
+  if(redo&&tab==="clock"&&!settingsOpen)render();
+}
+setInterval(function(){try{ckTick()}catch(e){}},500);
+
+/* actions */
+function ckAct(a,b){
+  ckAudioInit();
+  var v=b.dataset.v,id=b.dataset.id,w=ck.sw,t=ck.tm;
+  switch(a){
+    case "ck-sub":ck.sub=v;render();return;
+    case "ck-tap":
+      ck.spinAt=Date.now();ck.taps++;ck.cap=pick(AFF);setT("ck-cap",ck.cap);
+      var f=document.getElementById("ck-face");
+      if(f){f.classList.remove("wob");void f.offsetWidth;f.classList.add("wob");var rc=f.getBoundingClientRect();confetti(rc.left+rc.width/2,rc.top+rc.height/2,26)}
+      if(ck.taps%7===0)toast("It's "+tzTime(LOCALTZ,new Date())+". Respectfully, go do the thing 💅");
+      return;
+    case "ck-swgo":
+      if(w.run){w.acc+=Date.now()-w.t0;w.run=false}else{w.t0=Date.now();w.run=true}
+      render();return;
+    case "ck-swlap":
+      if(w.run){var cur=swMs();w.laps.push({n:w.laps.length+1,split:cur-w.lastLap,total:cur});w.lastLap=cur;toast("Lap "+w.laps.length+" 🏁")}
+      else{w.acc=0;w.laps=[];w.lastLap=0}
+      render();return;
+    case "ck-tmset":t.set=Math.max(1,+v||300);render();return;
+    case "ck-tmgo":
+      if(t.run){t.left=Math.max(0,t.endAt-Date.now());t.run=false;t.paused=true}
+      else if(t.paused){t.endAt=Date.now()+t.left;t.run=true;t.paused=false}
+      else{if(!(t.set>=1))return;t.total=t.set;t.endAt=Date.now()+t.set*1000;t.run=true;t.paused=false;toast("Timer on ⏳ lock in")}
+      render();return;
+    case "ck-tmreset":t.run=false;t.paused=false;render();return;
+    case "ck-adel":S.settings.alarms=alarms().filter(function(x){return x.id!==id});save("settings");render();return;
+    case "ck-cadd":var sel=document.getElementById("ck-city");if(sel&&sel.value){cities().push(sel.value);save("settings");render()}return;
+    case "ck-cdel":S.settings.cities=cities().filter(function(x){return x!==id});save("settings");render();return;
+    case "ck-snooze":ck.snooze={at:Date.now()+300000,label:ck.ringLabel};ckStopRing();toast("Snoozed for 5 minutes 😴");return;
+    case "ck-dismiss":ckStopRing();toast("Look at you, up and locked in ✨");return;
+  }
+}
+function ckInput(t){
+  var k=t.dataset.ck;
+  if(k==="tin"){
+    var m=numOf(document.getElementById("ck-tmin").value,0,0,99),s=numOf(document.getElementById("ck-tsec").value,0,0,59);
+    ck.tm.set=m*60+s;setT("ck-tmt",fmtTm(ck.tm.set*1000));
+  }else if(k==="atog"&&t.type==="checkbox"){
+    var chg=false;alarms().forEach(function(a){if(a.id===t.dataset.id&&a.on!==t.checked){a.on=t.checked;chg=true}});
+    if(chg){save("settings");render()}
+  }
+}
+document.addEventListener("submit",function(e){
+  var f=e.target.dataset&&e.target.dataset.form;if(f!=="ckalarm")return;
+  e.preventDefault();
+  var tm=document.getElementById("ck-at").value;if(!tm)return;
+  alarms().push({id:uid8(),time:tm,label:document.getElementById("ck-al").value.trim(),on:true,rep:document.getElementById("ck-ar").value});
+  save("settings");toast("Alarm set for "+fmtTime(tm)+" ⏰");render();
+});
+
 /* Coach */
 function vCoach(){
   var r=coach.res,o=vHead("Coach","Vent it. Get one move now and one fix for later.");
@@ -806,78 +1245,33 @@ function vCoach(){
     if(r.safety)o+='<section class="sec"><div class="note"><p>If you are thinking about hurting yourself, call or text <strong>988</strong> (US) or tell someone near you now.</p></div></section>';
     o+='<section class="sec reply"><div><h3>What I hear</h3><p>'+esc(r.validate)+'</p></div><div><h3>The real problem</h3><p>'+esc(r.real_problem)+'</p></div><div><h3>Do this now</h3><p><strong>'+esc(r.do_now)+'</strong></p></div><div><h3>Fix it for good</h3><p>'+esc(r.long_term)+'</p></div>'+(r.line?'<p class="aff">'+esc(r.line)+'</p>':'')+'</section>';
   }
-  o+='<section class="sec"><p class="muted">Coach gives built-in suggestions, not therapy or medical advice. If things feel unsafe, call or text 988 (US).</p></section>';
+  o+='<section class="sec"><p class="muted">Coach is an AI, not a therapist. If things feel unsafe, call or text 988 (US).</p></section>';
   return o;
 }
 var CRISIS=/(kill myself|suicid|end my life|want to die|hurt myself|self[- ]?harm|better off dead|end it all|not want to be here)/i;
-var SOFTSAFE=/(hopeless|worthless|hate myself|can'?t go on|no point)/i;
-var CTHEMES=[
- {re:/\b(sad|depressed|empty|numb|cry|crying|lonely|alone|hopeless|worthless|hate myself|no point)\b/i,
-  v:["That sounds heavy, and it makes sense that you're worn out by it.","That is a real feeling, and I'm glad you said it out loud instead of carrying it quietly."],
-  r:["Low days make everything look bigger and your energy look smaller, so tasks feel impossible when they are only tiring.","When mood drops, small wins stop feeling like wins. Today's problem is energy, not your character."],
-  n:["Drink a full glass of water, step outside for five minutes, then text one person you trust. Nothing else counts yet.","Wash your face, put on clean clothes, and walk outside for ten minutes. Then tick one habit."],
-  l:["Book one visit with your campus counseling center this week. If low days keep stacking up, that is exactly what it's for.","Keep sleep, water and movement as your floor, and tell one real person how you've been. Support beats willpower here."],
-  a:["Soft heart, hard schedule. You're allowed to need help.","You are not behind as a person. You're in a hard stretch."]},
- {re:/\b(overwhelmed|overwhelming|anxious|anxiety|stress|stressed|panic|too much|behind|drowning|spiral|spiraling)\b/i,
-  v:["Girl, too many things at once will do that. Your stress makes sense.","That's a lot, and your brain is trying to hold all of it at the same time."],
-  r:["Everything is sitting in your head as one giant pile, so none of it is a next step yet.","The workload isn't the whole problem. Nothing is sorted by deadline yet, and sorting is the fix."],
-  n:["Set a ten-minute timer, write everything on your mind in a list, circle the one with the nearest deadline, and do five minutes of it.","Do a brain dump in Lock in, pick the single thing with a grade or deadline attached, and start one 25-minute block."],
-  l:["Put every deadline in the Plan tab this week and pick three priorities each morning. A visible list shrinks the pile.","Do a ten-minute Sunday review: deadlines, three priorities, one thing to drop."],
-  a:["One assignment at a time. One class at a time.","You don't have to fix the semester today. Just the next hour."]},
- {re:/\b(sleep|slept|overslept|oversleep|tired|exhausted|insomnia|nap|napping|wake up)\b/i,
-  v:["The sleep thing is wrecking your days. That's frustrating, and it's fixable.","Being tired makes everything feel like a personality problem. It isn't one."],
-  r:["A shifting wake-up time and late-night phone use keep pushing sleep later, so every morning starts behind.","The late night is stealing the morning. Your body needs a fixed wake time more than a perfect bedtime."],
-  n:["Tonight, put the phone to charge across the room, set a wake-up alarm there, and be in bed with lights out at your wind-down reminder.","Get up at the same time tomorrow no matter what, drink water, and get sunlight within thirty minutes."],
-  l:["Hold one wake time every day for two weeks, weekends included, and keep the phone out of bed.","Protect the last hour before bed: no scrolling, dim lights, same routine. Move bedtime fifteen minutes earlier each night."],
-  a:["Sleep is a habit, not a reward.","Your 7 a.m. self and your 11 p.m. self are on the same team."]},
- {re:/\b(gpa|grade|grades|exam|test|assignment|homework|class|classes|professor|fail|failing|study|studying|essay|quiz|midterm|final|finals)\b/i,
-  v:["School stress is real, especially when you're rebuilding your GPA.","That makes sense. Grades feel personal even though they're just numbers."],
-  r:["The risk isn't the whole semester. It's the next deadline you haven't planned. Vague dread beats clear tasks every time.","Avoiding the work feels safer than finding out where you stand. A clear plan takes the fear out."],
-  n:["Open your syllabus, find the next graded thing, add it to the Plan tab, and do one 25-minute Lock in on just that.","Message a professor or classmate about the one thing you don't understand, then start a 25-minute block."],
-  l:["Put every due date in Plan, schedule two study blocks a day, and go to office hours once a week for your hardest class.","Use your campus tutoring center for the class you're most behind in, and review it twenty minutes daily instead of cramming."],
-  a:["Prove yourself right.","Hot girls hand in assignments on time."]},
- {re:/\b(procrastinat\w*|motivat\w*|lazy|can't start|don't want to|put off|distract\w*|phone|tiktok|scroll\w*|doomscroll\w*)\b/i,
-  v:["Girl, we've all been there. Wanting to start and not starting is not laziness.","Honest and relatable. Starting is the hardest part, not the work."],
-  r:["You're waiting to feel motivated, but motivation shows up after you begin, not before.","The task feels big and unclear, so avoiding it feels easier. Make it small and it stops being scary."],
-  n:["Put the phone in another room, set a 10-minute timer, and work on the ugliest part of the task until it rings. You can stop after.","Open the document, write the first sentence, and keep going for ten minutes. Starting ugly counts."],
-  l:["Use a Lock in block at the same time every day with the phone out of the room. A routine beats a mood.","Break big assignments into 25-minute chunks in Plan so every one has a clear first step."],
-  a:["You don't need motivation. You need the next ten minutes.","We don't wait to feel ready. We start ugly."]},
- {re:/\b(money|broke|rent|bill|bills|job|jobs|pay|debt|afford|savings|income)\b/i,
-  v:["Money stress is heavy, and it makes everything else harder to focus on.","That's stressful, and worrying about it doesn't mean you're bad with money."],
-  r:["Not knowing the exact numbers makes the worry bigger than the problem.","Money is invisible right now. Once it's written down, it becomes something you can plan."],
-  n:["Open the Plan tab, log what you've spent this week, and write down your next three bills with dates.","Check your balance, write what you need before the next paycheck, and apply to one job today."],
-  l:["Apply to two jobs a week and track them in Plan. Check your campus student employment and financial aid offices too.","Do a ten-minute money check every Sunday and set one small savings number, even five dollars."],
-  a:["Small and done beats big and imaginary.","Discipline is self-respect with a schedule."]},
- {re:/\b(gym|workout|exercise|eat|eating|food|weight|energy|run|running)\b/i,
-  v:["Taking care of your body is part of the plan, and slipping isn't failing.","Movement and food are the first things to go when life gets busy. That's normal."],
-  r:["You're treating exercise as an all-or-nothing hour, so on hard days it becomes zero.","Energy runs on sleep, food and movement. Missing one drags the other two down."],
-  n:["Put on shoes and walk for twenty minutes now, then eat something real with protein.","Do ten minutes of any movement right now. If you feel like it, keep going."],
-  l:["Pick a set workout time and put it in Remind. A bad workout still counts, so the minimum is showing up.","Plan three easy meals this week so food stops being another decision."],
-  a:["One workout doesn't change your body. Showing up a hundred times does.","A twenty-minute walk is a whole mood change."]},
- {re:/\b(friend|friends|boyfriend|girlfriend|family|mom|dad|argument|fight|ignored|relationship)\b/i,
-  v:["That sounds painful, and it's okay to feel hurt by it.","Relationships take a lot of energy, so no wonder it's on your mind."],
-  r:["The hurt gets louder because you're replaying it alone. Talking it through usually shrinks it.","You're trying to guess what other people think. You only control what you say and do next."],
-  n:["Write what you want to say in three sentences, then wait an hour before sending anything.","Go for a ten-minute walk, then text one friend you feel safe with."],
-  l:["Set one weekly plan with a friend, and bring up what bothers you early, calmly and simply.","If this keeps draining you, campus counseling is a good place to practice those conversations."],
-  a:["Protect your peace and your study block.","Be gentle with your feelings and strict with your calendar."]},
- {re:/./,
-  v:["I hear you. That's a lot to carry.","Thanks for saying it plainly. That helps."],
-  r:["There's probably one thing at the center of this that's bigger than the rest. Naming it is the first step.","It's easier to fix one clear problem than a vague feeling, so let's find the one."],
-  n:["Write one sentence for what's bothering you most, then one tiny action for it, and do it for ten minutes.","Drink water, stand up, stretch for two minutes, and tick the easiest habit on your list."],
-  l:["Use the daily review to spot what keeps repeating, and fix that pattern in your Sunday review.","Keep a steady routine for sleep, water, movement and one study block. Boring consistency fixes a lot."],
-  a:["Proud of you for opening this app. Now do one thing.","Small steps still leave footprints."]}
-];
 function runCoach(){
-  var txt=coach.text.trim();if(!txt)return;
+  var txt=coach.text.trim();if(!txt||coach.busy)return;
   coach.err="";coach.res=null;coach.crisis=false;
   if(CRISIS.test(txt)){coach.crisis=true;render();return}
-  var th=CTHEMES.filter(function(t){return t.re.test(txt)})[0],n=txt.length+new Date().getDate();
-  var pk=function(a,k){return a[(n+k)%a.length]};
-  var d=dayOf(home()),miss=coach.inc?S.settings.habits.filter(function(h){return h.label&&!d.h[h.id]}):[];
-  var nowStep=pk(th.n,2);
-  if(miss.length&&th.n!==CTHEMES[0].n)nowStep+=' Then tick "'+miss[0].label+'" today.';
-  coach.res={validate:pk(th.v,0),real_problem:pk(th.r,1),do_now:nowStep,long_term:pk(th.l,3),line:pk(th.a,4),safety:SOFTSAFE.test(txt)};
-  render();
+  coach.busy=true;render();
+  var d=dayOf(today()),hs=S.settings.habits;
+  var log=coach.inc?"\nToday's log: "+hs.filter(function(h){return d.h[h.id]}).length+" of "+hs.length+" habits done (missed: "+(hs.filter(function(h){return !d.h[h.id]}).map(function(h){return h.label}).join(", ")||"none")+"). Mood "+(d.mood?d.mood+"/5":"not logged")+". Focus minutes: "+(d.focus||0)+".":"";
+  var prompt="You are the accountability coach inside Sana's personal planner. Voice: big-sister energy, funny, direct, warm. Occasional casual phrases like \"girl\" or \"respectfully\" are fine; never cringe, never cruel, never unrealistic. Sana is a college student rebuilding after a 2.57 GPA semester, dealing with low mood, oversleeping and low motivation. Her goals: steady habits, better grades, work experience, steadier finances, confidence. Her daily habits: meditation, journaling, exercise, water, academic work, a 10-minute relationship reflection, sleep."
+   +"\n\nShe wrote:\n\"\"\""+txt+"\"\"\""+log
+   +"\n\nRespond with ONLY a JSON object, no markdown, with these string keys: \"validate\" (1-2 sentences that name and validate the feeling), \"real_problem\" (1-2 sentences identifying the underlying problem), \"do_now\" (one concrete action she can start in under 15 minutes), \"long_term\" (one specific durable fix), \"line\" (one short affirmation in her voice), and boolean \"safety\". If she mentions wanting to die, hurting herself or being unsafe, set safety to true, drop the humor, be warm and tell her to call or text 988 (US) or tell someone near her tonight. Keep every string under 60 words. Never shame her.";
+  var cl=window.claude;
+  (cl&&cl.use?cl.use("sample"):Promise.resolve(null)).then(function(sample){
+    if(!sample)throw {code:"none"};
+    return sample(prompt,{cache:false});
+  }).then(function(res){
+    var t=(res&&res.text)||"",a=t.indexOf("{"),b=t.lastIndexOf("}");
+    var o=JSON.parse(t.slice(a,b+1));
+    coach.res={validate:String(o.validate||""),real_problem:String(o.real_problem||""),do_now:String(o.do_now||""),long_term:String(o.long_term||""),line:String(o.line||""),safety:!!o.safety};
+  }).catch(function(e){
+    coach.err=(e&&e.code==="not_granted")?"Coach needs your OK to run. Tap Get the plan again and allow it when asked."
+      :(e&&e.code==="none")?"Coach is not available in this view. Open the page in Claude to use it."
+      :"Coach could not answer just now. Try again in a minute.";
+  }).then(function(){coach.busy=false;if(tab==="coach")render()});
 }
 
 /* Settings */
@@ -905,7 +1299,9 @@ function vSettings(){
   +'<section class="sec"><h3>Daily habits</h3><p class="muted">Rename, add or remove. Past check-ins stay saved.</p>'
   +hs.map(function(h,i){return '<div class="grid2" style="grid-template-columns:64px minmax(0,1fr) minmax(0,1fr) auto;align-items:center;margin-bottom:8px">'+fld("settings","habits."+i+".icon",hicon(h))+fld("settings","habits."+i+".label","Habit")+fld("settings","habits."+i+".detail","Detail, e.g. 15 minutes")+'<button class="x" type="button" data-act="hrem" data-i="'+i+'">Remove</button></div>'}).join("")
   +'<button class="btn sm" type="button" data-act="hadd">Add a habit</button></section>'
-  +'<section class="sec"><h3>Backup</h3><p class="muted">Your data is saved in this browser on this device. Download a backup now and then. Restoring from a backup replaces what is here, and it is how you move to a new phone or browser.</p><div class="row"><button class="btn primary" type="button" data-act="export">Download backup</button><label class="btn" for="import-file" style="cursor:pointer">Restore from file</label><input id="import-file" type="file" accept="application/json,.json" data-chg="import" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"></div></section>'
+  +'<section class="sec"><h3>Late-start minutes</h3><p class="muted">When you start the day late, the plan uses the full time if there is room and the lite time if there is not. A habit set to 0 minutes is just a quick "do it now".</p>'
+  +hs.map(function(h,i){if(h.id==="sleep")return '';var m=hMins(h);return '<div class="grid3" style="grid-template-columns:minmax(0,1fr) 96px 96px;align-items:center;margin-bottom:8px"><span>'+esc(hicon(h))+' '+esc(h.label||"Habit")+'</span><div class="fw"><input type="number" min="0" max="240" inputmode="numeric" id="'+fid("settings","habits."+i+".full")+'" data-doc="settings" data-path="habits.'+i+'.full" placeholder="Full '+m.f+'" aria-label="Full minutes for '+esc(h.label)+'" value="'+esc(h.full==null?"":h.full)+'"></div><div class="fw"><input type="number" min="0" max="240" inputmode="numeric" id="'+fid("settings","habits."+i+".lite")+'" data-doc="settings" data-path="habits.'+i+'.lite" placeholder="Lite '+m.l+'" aria-label="Lite minutes for '+esc(h.label)+'" value="'+esc(h.lite==null?"":h.lite)+'"></div></div>'}).join("")
+  +'<div class="fw" style="max-width:200px;margin-top:10px"><label class="f" for="'+fid("settings","lateBed")+'">Usual bedtime</label><input type="time" id="'+fid("settings","lateBed")+'" data-doc="settings" data-path="lateBed" value="'+esc(S.settings.lateBed||"")+'"></div></section>'
   +'<section class="sec"><h3>Your own affirmations</h3>'
   +'<form data-form="aff" class="row" style="flex-wrap:nowrap"><input id="aff-new" type="text" placeholder="Write one in your own voice" aria-label="New affirmation"><button class="btn primary" type="submit">Add</button></form>'
   +'<div style="height:8px"></div>'+my.map(function(a,i){return '<div class="li" style="grid-template-columns:minmax(0,1fr) auto"><div class="t">'+esc(a)+'</div><button class="x" type="button" data-act="affdel" data-i="'+i+'">Remove</button></div>'}).join("")+'</section>';
@@ -922,9 +1318,9 @@ function render(){
   var idx=diff(START,today())+1;
   $("#dayc").textContent=idx<1?"Starts "+fmtShort(START):idx>TOTAL?"Plan complete":"Day "+idx+" of "+TOTAL;
   $("#btn-settings").textContent=settingsOpen?"Close":"Settings";
-  var views={today:vToday,lockin:vLock,week:vWeek,month:vMonth,term:vTerm,progress:vProgress,plan:vPlan,coach:vCoach,remind:vRemind};
+  var views={today:vToday,lockin:vLock,week:vWeek,month:vMonth,term:vTerm,progress:vProgress,plan:vPlan,coach:vCoach,remind:vRemind,clock:vClock};
   $("#view").innerHTML=settingsOpen?vSettings():views[tab]();
-  setStatus();
+  setStatus();ckSync();
 }
 function route(){
   rebuildTabs();
@@ -936,6 +1332,7 @@ window.addEventListener("hashchange",route);
 
 /* ---------- events ---------- */
 function act(a,b){
+  if(a.indexOf("ck-")===0){ckAct(a,b);return}
   var v=b.dataset.v,id=b.dataset.id;
   switch(a){
     case "settings":settingsOpen=!settingsOpen;break;
@@ -944,6 +1341,11 @@ function act(a,b){
     case "dnav":cur=addDays(cur,+v);if(cur>END)cur=END;if(cur<START)cur=START;break;
     case "dtoday":cur=home();break;
     case "aff":affI=Math.floor(Math.random()*500);affFx=true;break;
+    case "late-open":lateOpen=!lateOpen;break;
+    case "late-build":lateBuild();break;
+    case "late-replan":var ld=root("day-"+today(),true);ld.late=null;save("day-"+today());lateV={start:"",bed:""};lateOpen=true;break;
+    case "late-clear":var ld2=root("day-"+today(),true);ld2.late=null;save("day-"+today());lateOpen=false;break;
+    case "late-timer":var lm=Math.max(1,+b.dataset.m||5);ck.sub="tm";ck.tm.run=true;ck.tm.paused=false;ck.tm.set=lm*60;ck.tm.total=lm*60;ck.tm.endAt=Date.now()+lm*60000;toast("Timer on for "+lm+" min ⏳");location.hash="clock";return;
     case "golock":location.hash="lockin";return;
     case "wnav":wkEnd=addDays(wkEnd,+v);break;
     case "wtoday":wkEnd=weekEnd(today());break;
@@ -973,7 +1375,6 @@ function act(a,b){
     case "hrem":S.settings.habits.splice(+b.dataset.i,1);save("settings");break;
     case "affdel":S.settings.myAffs.splice(+b.dataset.i,1);save("settings");break;
     case "coach":runCoach();return;
-    case "export":try{var bk=JSON.stringify({app:"sana-os",v:1,settings:S.settings,days:S.days,rev:S.rev,lists:S.lists,lts:S.lts},null,1),bl=new Blob([bk],{type:"application/json"}),u=URL.createObjectURL(bl),an=document.createElement("a");an.href=u;an.download="sana-os-backup-"+today()+".json";document.body.appendChild(an);an.click();an.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast("Backup downloaded ✨")}catch(x){toast("Could not make the backup.")}return;
     case "copyrem":(navigator.clipboard?navigator.clipboard.writeText(remText()):Promise.reject()).then(function(){toast("Copied ✨")},function(){toast("Could not copy. Select the text and copy it.")});return;
   }
   render();
@@ -981,15 +1382,17 @@ function act(a,b){
 document.addEventListener("click",function(e){var b=e.target.closest("[data-act]");if(b&&!b.disabled){try{act(b.dataset.act,b)}catch(err){toast("Something glitched: "+((err&&err.message)||err));try{render()}catch(x){}}}});
 document.addEventListener("input",function(e){
   var t=e.target,ds=t.dataset||{};
-  if(ds.gdoc&&(t.type==="range"||t.type==="number")){gpaInput(t)}
+  if(ds.late){lateV[ds.late]=t.value}
+  else if(ds.ck){ckInput(t)}
+  else if(ds.gdoc&&(t.type==="range"||t.type==="number")){gpaInput(t)}
   else if(ds.doc&&t.type!=="checkbox"){setPath(ds.doc,ds.path,t.value);if(ds.doc==="settings"&&ds.path.indexOf("tabs.")===0)renderNav()}
   else if(ds.lock){lock[ds.lock]=t.value}
   else if(ds.coach==="text"){coach.text=t.value}
 });
 document.addEventListener("change",function(e){
   var t=e.target,ds=t.dataset||{};
-  if(ds.gtog){gpaToggle(t)}
-  else if(ds.chg==="import"){var f=t.files&&t.files[0];if(!f)return;var fr=new FileReader();fr.onload=function(){try{var o=JSON.parse(fr.result);if(!o||typeof o!=="object"||!(o.days||o.settings||o.rev||o.lists))throw 0;adopt(o);persistLocal();setStatus();render();toast("Backup restored ✨")}catch(x){toast("That file is not a Sana OS backup.")}};fr.onerror=function(){toast("Could not read that file.")};fr.readAsText(f);t.value=""}
+  if(ds.ck){ckInput(t)}
+  else if(ds.gtog){gpaToggle(t)}
   else if(ds.chg==="jump"){if(t.value){cur=t.value>END?END:(t.value<START?START:t.value);render()}}
   else if(ds.coach==="inc"){coach.inc=t.checked}
   else if(ds.doc&&t.type==="checkbox"){setPath(ds.doc,ds.path,t.checked);if(ds.doc==="settings"&&ds.path.indexOf("tabs.")===0)renderNav()}
@@ -1010,12 +1413,14 @@ document.addEventListener("submit",function(e){
 });
 
 /* ---------- boot ---------- */
-loadLocal();
+loadLocal();migrate();
 rebuildTabs();
 (function(){var h=(location.hash||"").replace("#","");if(TABS.some(function(t){return t[0]===h}))tab=h})();
 render();
 if(!RM){var fe=["💖","✨","🌸","🎀","⭐","💅"],fr=document.createDocumentFragment();for(var q=0;q<9;q++){var sp=document.createElement("span");sp.className="fl";sp.textContent=fe[q%fe.length];sp.style.cssText="left:"+(4+q*11)+"%;font-size:"+(16+Math.random()*12).toFixed(0)+"px;animation-duration:"+(16+Math.random()*12).toFixed(0)+"s;animation-delay:-"+(Math.random()*20).toFixed(0)+"s";fr.appendChild(sp)}document.body.appendChild(fr)}
+initRemote();
 })();
 </script>
+
 
 </body></html>
