@@ -1,9 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>Sana OS</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fredoka:wght@500..700&family=Nunito:wght@400..800&family=Yellowtail&display=swap">
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Sana OS</title><meta name="theme-color" content="#FFF1F6"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Sana OS"><meta name="apple-mobile-web-app-status-bar-style" content="default"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fredoka:wght@500..700&family=Nunito:wght@400..800&family=Yellowtail&display=swap"></head><body>
 <style>
 /* Layout: one sticky header (script wordmark, day counter, pill tab strip) over a single 760px column.
    Sections sit on a dotted blush ground, separated by dashed lines; cards are stickers with a hard pink offset shadow. */
@@ -368,9 +363,8 @@ var coach={busy:false,res:null,err:"",text:"",inc:true,crisis:false};
 var lock={mode:"lock",step:0,endAt:0,mission:"",dump:"",env:[false,false,false,false,false],dur:50,total:0,startAt:0,cp:-1,log:[],iv:null,done:0};
 
 /* ---------- storage ---------- */
-var col=null,timers={},chains={},inflight=0,remoteOK=false;
-var LS="sana-os-v1";
-function persistLocal(){try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}}
+var LS="sana-os-v1",lsFail=false;
+function persistLocal(){try{localStorage.setItem(LS,JSON.stringify(S));lsFail=false}catch(e){lsFail=true}}
 function loadLocal(){try{var r=localStorage.getItem(LS);if(r){var o=JSON.parse(r);adopt(o)}}catch(e){}}
 function adopt(o){
   if(o.settings)S.settings=Object.assign(defSettings(),o.settings);
@@ -379,11 +373,7 @@ function adopt(o){
   if(o.lts)S.lts=o.lts;
   if(o.lists)S.lists=Object.assign({assignments:[],money:[],jobs:[]},o.lists);
 }
-function setStatus(){
-  var el=$("#status");if(!el)return;
-  var busy=inflight>0||Object.keys(timers).length>0;
-  el.textContent=busy?"Saving…":(remoteOK?"Saved":"On this device only");
-}
+function setStatus(){var el=$("#status");if(!el)return;el.textContent=lsFail?"Cannot save here. Download a backup.":"Saved on this device"}
 function bodyFor(key){
   var i=key.indexOf("-"),kind=i<0?key:key.slice(0,i),k=key.slice(i+1);
   if(key==="settings")return S.settings;
@@ -392,63 +382,7 @@ function bodyFor(key){
   if(kind==="list")return {items:S.lists[k]||[]};
 }
 function stamp(key){var n=Date.now();if(key.indexOf("list-")===0){S.lts[key.slice(5)]=n}else{var b=bodyFor(key);if(b)b._t=n}}
-function save(key){
-  stamp(key);persistLocal();
-  clearTimeout(timers[key]);
-  timers[key]=setTimeout(function(){delete timers[key];flush(key,0)},600);
-  setStatus();
-}
-function flush(key,tries){
-  if(!col){setStatus();return}
-  var b=bodyFor(key);if(!b)return;
-  var snap=clone(b);if(key.indexOf("list-")===0)snap._t=S.lts[key.slice(5)]||0;
-  inflight++;setStatus();
-  chains[key]=(chains[key]||Promise.resolve()).then(function(){return col.doc(key).set(snap)}).then(function(){inflight--;setStatus()},function(err){
-    inflight--;setStatus();
-    if(err&&err.code==="unavailable"&&tries<1){setTimeout(function(){flush(key,tries+1)},1500+Math.random()*1000)}
-    else{var el=$("#status");if(el)el.textContent="Sync problem. Kept on this device."}
-  });
-}
-function applyRemote(snap){
-  var pending=Object.keys(timers);
-  snap.docs.forEach(function(d){
-    var id=d.id;if(pending.indexOf(id)>=0)return;
-    var data=clone(d.data()||{}),rt=data._t||0;
-    var i=id.indexOf("-"),kind=i<0?id:id.slice(0,i),k=id.slice(i+1);
-    if(id==="settings"){if(rt>=((S.settings&&S.settings._t)||0))S.settings=Object.assign(defSettings(),data)}
-    else if(kind==="day"){if(rt>=((S.days[k]&&S.days[k]._t)||0))S.days[k]=Object.assign(blankDay(),data)}
-    else if(kind==="rev"){if(rt>=((S.rev[k]&&S.rev[k]._t)||0))S.rev[k]=data}
-    else if(kind==="list"){if(rt>=(S.lts[k]||0)){S.lists[k]=data.items||[];S.lts[k]=rt}}
-  });
-}
-function hasLocalData(){return Object.keys(S.days).length>0||Object.keys(S.rev).length>0||S.lists.assignments.length+S.lists.money.length+S.lists.jobs.length>0}
-function loadRemote(){
-  if(!col)return Promise.resolve();
-  return col.get().then(function(snap){
-    remoteOK=true;
-    if(snap.empty){
-      if(hasLocalData()){
-        Object.keys(S.days).forEach(function(k){flush("day-"+k,0)});
-        Object.keys(S.rev).forEach(function(k){flush("rev-"+k,0)});
-        Object.keys(S.lists).forEach(function(k){flush("list-"+k,0)});
-        flush("settings",0);
-      }
-    }else{applyRemote(snap);persistLocal()}
-    setStatus();
-    if(!isEditing())render();
-  }).catch(function(){remoteOK=false;setStatus()});
-}
-function isEditing(){var a=document.activeElement;return a&&(a.tagName==="INPUT"||a.tagName==="TEXTAREA"||a.tagName==="SELECT")}
-function initRemote(){
-  var cl=window.claude;if(!cl||!cl.use){return}
-  Promise.all([cl.use("db"),cl.use("user")]).then(function(r){
-    var db=r[0],user=r[1];if(!db||!user)return null;
-    return user.id().then(function(id){if(!id)return null;col=db.collection("data/users/"+id);return loadRemote()});
-  }).catch(function(){});
-}
-document.addEventListener("visibilitychange",function(){
-  if(document.visibilityState==="visible"&&col&&Object.keys(timers).length===0&&inflight===0)loadRemote();
-});
+function save(key){stamp(key);persistLocal();setStatus()}
 
 var RM=!!(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
 var pick=function(a){return a[Math.floor(Math.random()*a.length)]};
@@ -808,33 +742,78 @@ function vCoach(){
     if(r.safety)o+='<section class="sec"><div class="note"><p>If you are thinking about hurting yourself, call or text <strong>988</strong> (US) or tell someone near you now.</p></div></section>';
     o+='<section class="sec reply"><div><h3>What I hear</h3><p>'+esc(r.validate)+'</p></div><div><h3>The real problem</h3><p>'+esc(r.real_problem)+'</p></div><div><h3>Do this now</h3><p><strong>'+esc(r.do_now)+'</strong></p></div><div><h3>Fix it for good</h3><p>'+esc(r.long_term)+'</p></div>'+(r.line?'<p class="aff">'+esc(r.line)+'</p>':'')+'</section>';
   }
-  o+='<section class="sec"><p class="muted">Coach is an AI, not a therapist. If things feel unsafe, call or text 988 (US).</p></section>';
+  o+='<section class="sec"><p class="muted">Coach gives built-in suggestions, not therapy or medical advice. If things feel unsafe, call or text 988 (US).</p></section>';
   return o;
 }
 var CRISIS=/(kill myself|suicid|end my life|want to die|hurt myself|self[- ]?harm|better off dead|end it all|not want to be here)/i;
+var SOFTSAFE=/(hopeless|worthless|hate myself|can'?t go on|no point)/i;
+var CTHEMES=[
+ {re:/\b(sad|depressed|empty|numb|cry|crying|lonely|alone|hopeless|worthless|hate myself|no point)\b/i,
+  v:["That sounds heavy, and it makes sense that you're worn out by it.","That is a real feeling, and I'm glad you said it out loud instead of carrying it quietly."],
+  r:["Low days make everything look bigger and your energy look smaller, so tasks feel impossible when they are only tiring.","When mood drops, small wins stop feeling like wins. Today's problem is energy, not your character."],
+  n:["Drink a full glass of water, step outside for five minutes, then text one person you trust. Nothing else counts yet.","Wash your face, put on clean clothes, and walk outside for ten minutes. Then tick one habit."],
+  l:["Book one visit with your campus counseling center this week. If low days keep stacking up, that is exactly what it's for.","Keep sleep, water and movement as your floor, and tell one real person how you've been. Support beats willpower here."],
+  a:["Soft heart, hard schedule. You're allowed to need help.","You are not behind as a person. You're in a hard stretch."]},
+ {re:/\b(overwhelmed|overwhelming|anxious|anxiety|stress|stressed|panic|too much|behind|drowning|spiral|spiraling)\b/i,
+  v:["Girl, too many things at once will do that. Your stress makes sense.","That's a lot, and your brain is trying to hold all of it at the same time."],
+  r:["Everything is sitting in your head as one giant pile, so none of it is a next step yet.","The workload isn't the whole problem. Nothing is sorted by deadline yet, and sorting is the fix."],
+  n:["Set a ten-minute timer, write everything on your mind in a list, circle the one with the nearest deadline, and do five minutes of it.","Do a brain dump in Lock in, pick the single thing with a grade or deadline attached, and start one 25-minute block."],
+  l:["Put every deadline in the Plan tab this week and pick three priorities each morning. A visible list shrinks the pile.","Do a ten-minute Sunday review: deadlines, three priorities, one thing to drop."],
+  a:["One assignment at a time. One class at a time.","You don't have to fix the semester today. Just the next hour."]},
+ {re:/\b(sleep|slept|overslept|oversleep|tired|exhausted|insomnia|nap|napping|wake up)\b/i,
+  v:["The sleep thing is wrecking your days. That's frustrating, and it's fixable.","Being tired makes everything feel like a personality problem. It isn't one."],
+  r:["A shifting wake-up time and late-night phone use keep pushing sleep later, so every morning starts behind.","The late night is stealing the morning. Your body needs a fixed wake time more than a perfect bedtime."],
+  n:["Tonight, put the phone to charge across the room, set a wake-up alarm there, and be in bed with lights out at your wind-down reminder.","Get up at the same time tomorrow no matter what, drink water, and get sunlight within thirty minutes."],
+  l:["Hold one wake time every day for two weeks, weekends included, and keep the phone out of bed.","Protect the last hour before bed: no scrolling, dim lights, same routine. Move bedtime fifteen minutes earlier each night."],
+  a:["Sleep is a habit, not a reward.","Your 7 a.m. self and your 11 p.m. self are on the same team."]},
+ {re:/\b(gpa|grade|grades|exam|test|assignment|homework|class|classes|professor|fail|failing|study|studying|essay|quiz|midterm|final|finals)\b/i,
+  v:["School stress is real, especially when you're rebuilding your GPA.","That makes sense. Grades feel personal even though they're just numbers."],
+  r:["The risk isn't the whole semester. It's the next deadline you haven't planned. Vague dread beats clear tasks every time.","Avoiding the work feels safer than finding out where you stand. A clear plan takes the fear out."],
+  n:["Open your syllabus, find the next graded thing, add it to the Plan tab, and do one 25-minute Lock in on just that.","Message a professor or classmate about the one thing you don't understand, then start a 25-minute block."],
+  l:["Put every due date in Plan, schedule two study blocks a day, and go to office hours once a week for your hardest class.","Use your campus tutoring center for the class you're most behind in, and review it twenty minutes daily instead of cramming."],
+  a:["Prove yourself right.","Hot girls hand in assignments on time."]},
+ {re:/\b(procrastinat\w*|motivat\w*|lazy|can't start|don't want to|put off|distract\w*|phone|tiktok|scroll\w*|doomscroll\w*)\b/i,
+  v:["Girl, we've all been there. Wanting to start and not starting is not laziness.","Honest and relatable. Starting is the hardest part, not the work."],
+  r:["You're waiting to feel motivated, but motivation shows up after you begin, not before.","The task feels big and unclear, so avoiding it feels easier. Make it small and it stops being scary."],
+  n:["Put the phone in another room, set a 10-minute timer, and work on the ugliest part of the task until it rings. You can stop after.","Open the document, write the first sentence, and keep going for ten minutes. Starting ugly counts."],
+  l:["Use a Lock in block at the same time every day with the phone out of the room. A routine beats a mood.","Break big assignments into 25-minute chunks in Plan so every one has a clear first step."],
+  a:["You don't need motivation. You need the next ten minutes.","We don't wait to feel ready. We start ugly."]},
+ {re:/\b(money|broke|rent|bill|bills|job|jobs|pay|debt|afford|savings|income)\b/i,
+  v:["Money stress is heavy, and it makes everything else harder to focus on.","That's stressful, and worrying about it doesn't mean you're bad with money."],
+  r:["Not knowing the exact numbers makes the worry bigger than the problem.","Money is invisible right now. Once it's written down, it becomes something you can plan."],
+  n:["Open the Plan tab, log what you've spent this week, and write down your next three bills with dates.","Check your balance, write what you need before the next paycheck, and apply to one job today."],
+  l:["Apply to two jobs a week and track them in Plan. Check your campus student employment and financial aid offices too.","Do a ten-minute money check every Sunday and set one small savings number, even five dollars."],
+  a:["Small and done beats big and imaginary.","Discipline is self-respect with a schedule."]},
+ {re:/\b(gym|workout|exercise|eat|eating|food|weight|energy|run|running)\b/i,
+  v:["Taking care of your body is part of the plan, and slipping isn't failing.","Movement and food are the first things to go when life gets busy. That's normal."],
+  r:["You're treating exercise as an all-or-nothing hour, so on hard days it becomes zero.","Energy runs on sleep, food and movement. Missing one drags the other two down."],
+  n:["Put on shoes and walk for twenty minutes now, then eat something real with protein.","Do ten minutes of any movement right now. If you feel like it, keep going."],
+  l:["Pick a set workout time and put it in Remind. A bad workout still counts, so the minimum is showing up.","Plan three easy meals this week so food stops being another decision."],
+  a:["One workout doesn't change your body. Showing up a hundred times does.","A twenty-minute walk is a whole mood change."]},
+ {re:/\b(friend|friends|boyfriend|girlfriend|family|mom|dad|argument|fight|ignored|relationship)\b/i,
+  v:["That sounds painful, and it's okay to feel hurt by it.","Relationships take a lot of energy, so no wonder it's on your mind."],
+  r:["The hurt gets louder because you're replaying it alone. Talking it through usually shrinks it.","You're trying to guess what other people think. You only control what you say and do next."],
+  n:["Write what you want to say in three sentences, then wait an hour before sending anything.","Go for a ten-minute walk, then text one friend you feel safe with."],
+  l:["Set one weekly plan with a friend, and bring up what bothers you early, calmly and simply.","If this keeps draining you, campus counseling is a good place to practice those conversations."],
+  a:["Protect your peace and your study block.","Be gentle with your feelings and strict with your calendar."]},
+ {re:/./,
+  v:["I hear you. That's a lot to carry.","Thanks for saying it plainly. That helps."],
+  r:["There's probably one thing at the center of this that's bigger than the rest. Naming it is the first step.","It's easier to fix one clear problem than a vague feeling, so let's find the one."],
+  n:["Write one sentence for what's bothering you most, then one tiny action for it, and do it for ten minutes.","Drink water, stand up, stretch for two minutes, and tick the easiest habit on your list."],
+  l:["Use the daily review to spot what keeps repeating, and fix that pattern in your Sunday review.","Keep a steady routine for sleep, water, movement and one study block. Boring consistency fixes a lot."],
+  a:["Proud of you for opening this app. Now do one thing.","Small steps still leave footprints."]}
+];
 function runCoach(){
-  var txt=coach.text.trim();if(!txt||coach.busy)return;
+  var txt=coach.text.trim();if(!txt)return;
   coach.err="";coach.res=null;coach.crisis=false;
   if(CRISIS.test(txt)){coach.crisis=true;render();return}
-  coach.busy=true;render();
-  var d=dayOf(today()),hs=S.settings.habits;
-  var log=coach.inc?"\nToday's log: "+hs.filter(function(h){return d.h[h.id]}).length+" of "+hs.length+" habits done (missed: "+(hs.filter(function(h){return !d.h[h.id]}).map(function(h){return h.label}).join(", ")||"none")+"). Mood "+(d.mood?d.mood+"/5":"not logged")+". Focus minutes: "+(d.focus||0)+".":"";
-  var prompt="You are the accountability coach inside Sana's personal planner. Voice: big-sister energy, funny, direct, warm. Occasional casual phrases like \"girl\" or \"respectfully\" are fine; never cringe, never cruel, never unrealistic. Sana is a college student rebuilding after a 2.57 GPA semester, dealing with low mood, oversleeping and low motivation. Her goals: steady habits, better grades, work experience, steadier finances, confidence. Her daily habits: meditation, journaling, exercise, water, academic work, sleep."
-   +"\n\nShe wrote:\n\"\"\""+txt+"\"\"\""+log
-   +"\n\nRespond with ONLY a JSON object, no markdown, with these string keys: \"validate\" (1-2 sentences that name and validate the feeling), \"real_problem\" (1-2 sentences identifying the underlying problem), \"do_now\" (one concrete action she can start in under 15 minutes), \"long_term\" (one specific durable fix), \"line\" (one short affirmation in her voice), and boolean \"safety\". If she mentions wanting to die, hurting herself or being unsafe, set safety to true, drop the humor, be warm and tell her to call or text 988 (US) or tell someone near her tonight. Keep every string under 60 words. Never shame her.";
-  var cl=window.claude;
-  (cl&&cl.use?cl.use("sample"):Promise.resolve(null)).then(function(sample){
-    if(!sample)throw {code:"none"};
-    return sample(prompt,{cache:false});
-  }).then(function(res){
-    var t=(res&&res.text)||"",a=t.indexOf("{"),b=t.lastIndexOf("}");
-    var o=JSON.parse(t.slice(a,b+1));
-    coach.res={validate:String(o.validate||""),real_problem:String(o.real_problem||""),do_now:String(o.do_now||""),long_term:String(o.long_term||""),line:String(o.line||""),safety:!!o.safety};
-  }).catch(function(e){
-    coach.err=(e&&e.code==="not_granted")?"Coach needs your OK to run. Tap Get the plan again and allow it when asked."
-      :(e&&e.code==="none")?"Coach is not available in this view. Open the page in Claude to use it."
-      :"Coach could not answer just now. Try again in a minute.";
-  }).then(function(){coach.busy=false;if(tab==="coach")render()});
+  var th=CTHEMES.filter(function(t){return t.re.test(txt)})[0],n=txt.length+new Date().getDate();
+  var pk=function(a,k){return a[(n+k)%a.length]};
+  var d=dayOf(home()),miss=coach.inc?S.settings.habits.filter(function(h){return h.label&&!d.h[h.id]}):[];
+  var nowStep=pk(th.n,2);
+  if(miss.length&&th.n!==CTHEMES[0].n)nowStep+=' Then tick "'+miss[0].label+'" today.';
+  coach.res={validate:pk(th.v,0),real_problem:pk(th.r,1),do_now:nowStep,long_term:pk(th.l,3),line:pk(th.a,4),safety:SOFTSAFE.test(txt)};
+  render();
 }
 
 /* Settings */
@@ -853,6 +832,7 @@ function vSettings(){
   +'<section class="sec"><h3>Daily habits</h3><p class="muted">Rename, add or remove. Past check-ins stay saved.</p>'
   +hs.map(function(h,i){return '<div class="grid2" style="grid-template-columns:64px minmax(0,1fr) minmax(0,1fr) auto;align-items:center;margin-bottom:8px">'+fld("settings","habits."+i+".icon",hicon(h))+fld("settings","habits."+i+".label","Habit")+fld("settings","habits."+i+".detail","Detail, e.g. 15 minutes")+'<button class="x" type="button" data-act="hrem" data-i="'+i+'">Remove</button></div>'}).join("")
   +'<button class="btn sm" type="button" data-act="hadd">Add a habit</button></section>'
+  +'<section class="sec"><h3>Backup</h3><p class="muted">Your data is saved in this browser on this device. Download a backup now and then. Restoring from a backup replaces what is here, and it is how you move to a new phone or browser.</p><div class="row"><button class="btn primary" type="button" data-act="export">Download backup</button><label class="btn" for="import-file" style="cursor:pointer">Restore from file</label><input id="import-file" type="file" accept="application/json,.json" data-chg="import" style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none"></div></section>'
   +'<section class="sec"><h3>Your own affirmations</h3>'
   +'<form data-form="aff" class="row" style="flex-wrap:nowrap"><input id="aff-new" type="text" placeholder="Write one in your own voice" aria-label="New affirmation"><button class="btn primary" type="submit">Add</button></form>'
   +'<div style="height:8px"></div>'+my.map(function(a,i){return '<div class="li" style="grid-template-columns:minmax(0,1fr) auto"><div class="t">'+esc(a)+'</div><button class="x" type="button" data-act="affdel" data-i="'+i+'">Remove</button></div>'}).join("")+'</section>';
@@ -923,6 +903,7 @@ function act(a,b){
     case "hrem":S.settings.habits.splice(+b.dataset.i,1);save("settings");break;
     case "affdel":S.settings.myAffs.splice(+b.dataset.i,1);save("settings");break;
     case "coach":runCoach();return;
+    case "export":try{var bk=JSON.stringify({app:"sana-os",v:1,settings:S.settings,days:S.days,rev:S.rev,lists:S.lists,lts:S.lts},null,1),bl=new Blob([bk],{type:"application/json"}),u=URL.createObjectURL(bl),an=document.createElement("a");an.href=u;an.download="sana-os-backup-"+today()+".json";document.body.appendChild(an);an.click();an.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);toast("Backup downloaded ✨")}catch(x){toast("Could not make the backup.")}return;
     case "copyrem":(navigator.clipboard?navigator.clipboard.writeText(remText()):Promise.reject()).then(function(){toast("Copied ✨")},function(){toast("Could not copy. Select the text and copy it.")});return;
   }
   render();
@@ -938,6 +919,7 @@ document.addEventListener("input",function(e){
 document.addEventListener("change",function(e){
   var t=e.target,ds=t.dataset||{};
   if(ds.gtog){gpaToggle(t)}
+  else if(ds.chg==="import"){var f=t.files&&t.files[0];if(!f)return;var fr=new FileReader();fr.onload=function(){try{var o=JSON.parse(fr.result);if(!o||typeof o!=="object"||!(o.days||o.settings||o.rev||o.lists))throw 0;adopt(o);persistLocal();setStatus();render();toast("Backup restored ✨")}catch(x){toast("That file is not a Sana OS backup.")}};fr.onerror=function(){toast("Could not read that file.")};fr.readAsText(f);t.value=""}
   else if(ds.chg==="jump"){if(t.value){cur=t.value>END?END:(t.value<START?START:t.value);render()}}
   else if(ds.coach==="inc"){coach.inc=t.checked}
   else if(ds.doc&&t.type==="checkbox"){setPath(ds.doc,ds.path,t.checked);if(ds.doc==="settings"&&ds.path.indexOf("tabs.")===0)renderNav()}
@@ -963,7 +945,6 @@ rebuildTabs();
 (function(){var h=(location.hash||"").replace("#","");if(TABS.some(function(t){return t[0]===h}))tab=h})();
 render();
 if(!RM){var fe=["💖","✨","🌸","🎀","⭐","💅"],fr=document.createDocumentFragment();for(var q=0;q<9;q++){var sp=document.createElement("span");sp.className="fl";sp.textContent=fe[q%fe.length];sp.style.cssText="left:"+(4+q*11)+"%;font-size:"+(16+Math.random()*12).toFixed(0)+"px;animation-duration:"+(16+Math.random()*12).toFixed(0)+"s;animation-delay:-"+(Math.random()*20).toFixed(0)+"s";fr.appendChild(sp)}document.body.appendChild(fr)}
-initRemote();
 })();
 </script>
 
